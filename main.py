@@ -1,23 +1,26 @@
 import streamlit as st
 from ddl import create_n_insert
+from streamlit_extras.switch_page_button import switch_page
 
 create_n_insert()
 
-st.set_page_config(layout='wide')
+st.set_page_config(
+    layout="wide", 
+    page_title="Глобальная погода"
+    )
 
-st.sidebar.title('Adventure Works')
+st.sidebar.title("Глобальная погода")
 
-custs_page = st.Page(
-    'customers.py',
-    title='Customers',
-    default=True
-)
+if st.sidebar.button("Погода"):
+    switch_page("weather")
 
-sales_page = st.Page(
-    'sales.py',
-    title='Sales'
-)
+if st.sidebar.button("Качество воздуха"):
+    switch_page("air_quality")
 
-pgs = st.navigation([custs_page, sales_page])
+st.title("Добро пожаловать в дашборд 'Глобальная погода'")
+st.markdown("""
+Этот дашборд позволяет анализировать глобальные погодные данные, качество воздуха и климатические изменения.  
+Выберите категорию слева, чтобы увидеть данные.
+""")
 
-pgs.run()
+#st.markdown("📊 **Данные предоставлены на основе глобальных погодных записей.**")
