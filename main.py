@@ -7,8 +7,8 @@ st.set_page_config(layout="wide", page_title="Глобальная погода"
 
 st.sidebar.title("Глобальная погода")
 
-st.sidebar.page_link("weather", label="Погода")
-st.sidebar.page_link("air_quality", label="🌫️ Качество воздуха")
+st.sidebar.page_link("pages/weather", label="Погода")
+st.sidebar.page_link("pages/air_quality", label="Качество воздуха")
 
 st.title("Добро пожаловать в дашборд 'Глобальная погода'")
 st.markdown("""
