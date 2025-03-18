@@ -18,7 +18,7 @@ def create_tables():
 def read_xl(sheet_name, columns_dict):
     try:
         temp_df = pd.read_excel(
-            "source/extended_global_weather_data.xlsx",
+            "source/ExtendedGlobalWeatherData.xlsx",
             sheet_name=sheet_name,
             usecols=columns_dict.keys()
         ).rename(columns=columns_dict)
