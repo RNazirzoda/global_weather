@@ -1,22 +1,33 @@
 import duckdb
+import pandas as pd
 
-DB_FILE = 'my.db'
+DB_FILE = "my.db"
+
+conn = duckdb.connect(DB_FILE)
 
 def fetch_date_boundaries():
-    with duckdb.connect(DB_FILE) as duck:
-        min_date, max_date = duck.query("""
-            select
-                min(order_date) as min_date
-                , max(order_date) as max_date
-            from sales
-        """).fetchone() 
+    try:
+        with duckdb.connect(DB_FILE) as conn:
+            min_date, max_date = conn.execute("""
+                select
+                    min(last_updated) as min_date,
+                    max(last_updated) as max_date
+                from weather
+            """).fetchone()
         return min_date, max_date
+    except Exception as e:
+        print(f"Ошибка при получении временных границ: {e}")
+        return None, None
 
+def fetch_weather_data(report_date):
+    try:
+        with open("queries/weather_data.sql", "r", encoding="utf-8") as f:
+            weather_query = f.read().format(report_date=report_date)
 
-def fetch_customers(edate):
-    with open('queries/customers.sql') as f:
-        custs_query = f.read().format(report_date = edate)
-
-    with duckdb.connect(DB_FILE) as duck:
-        custs_df = duck.query(custs_query).to_df()
-        return custs_df
+        with duckdb.connect(DB_FILE) as conn:
+            weather_df = conn.execute(weather_query).fetchdf()
+        
+        return weather_df
+    except Exception as e:
+        print(f"Ошибка при загрузке погодных данных: {e}")
+        return None
