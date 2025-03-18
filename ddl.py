@@ -64,16 +64,16 @@ def create_n_insert():
         create_tables()
 
         tables_dict = {
-            "locations": {"columns": {"location_id": "location_id", "country": "country",
+            "Locations": {"columns": {"location_id": "location_id", "country": "country",
                                       "location_name": "location_name", "latitude": "latitude",
                                       "longitude": "longitude", "timezone": "timezone"},
                           "table_name": "locations"},
-            "weather": {"columns": {"weather_id": "weather_id", "location_id": "location_id",
+            "Weather": {"columns": {"weather_id": "weather_id", "location_id": "location_id",
                                     "last_updated": "last_updated", "temperature_celsius": "temperature_celsius",
                                     "feels_like_temp": "feels_like_temp", "humidity": "humidity",
                                     "wind_kph": "wind_kph", "heat_index": "heat_index"},
                         "table_name": "weather"},
-            "air_quality": {"columns": {"air_quality_id": "air_quality_id", "location_id": "location_id",
+            "AirQuality": {"columns": {"air_quality_id": "air_quality_id", "location_id": "location_id",
                                        "air_quality_PM2.5": "air_quality_PM2_5", "air_quality_PM10": "air_quality_PM10",
                                        "air_quality_index": "air_quality_index"},
                            "table_name": "air_quality"}
