@@ -1,7 +1,7 @@
 create view if not exists avg_temperature_per_country as
 select 
-    l.country  -- country name
-    , avg(w.temperature_celsius) as avg_temp  -- average temperature
+    l.country,  -- country name
+    avg(w.temperature_celsius) as avg_temp  -- average temperature
 from weather w
 	join locations l 
 		on w.location_id = l.location_id
