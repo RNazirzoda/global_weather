@@ -3,8 +3,6 @@ import pandas as pd
 
 DB_FILE = "my.db"
 
-conn = duckdb.connect(DB_FILE)
-
 def fetch_date_boundaries():
     try:
         with duckdb.connect(DB_FILE) as conn:
@@ -28,6 +26,9 @@ def fetch_weather_data(report_date):
             weather_df = conn.execute(weather_query).fetchdf()
         
         return weather_df
+    except fileNotFoundError:
+        print("Ошибка: файл queries/weather_data.sql не найден.")
+        return None
     except Exception as e:
         print(f"Ошибка при загрузке погодных данных: {e}")
         return None
