@@ -99,6 +99,7 @@ def create_n_insert():
                 "columns": {
                     "air_quality_id": "air_quality_id",
                     "location_id": "location_id",
+                    "last_updated": "last_updated",
                     "air_quality_pm2.5": "air_quality_pm2_5",
                     "air_quality_pm10": "air_quality_pm10"
                 },
