@@ -28,7 +28,7 @@ def fetch_weather_data(report_date):
             weather_df = conn.execute(weather_query).fetchdf()
         
         return weather_df
-    except fileNotFoundError:
+    except FileNotFoundError:
         print("Ошибка: файл queries/weather_data.sql не найден.")
         return None
     except Exception as e:
@@ -44,7 +44,6 @@ def get_air_quality_summary():
                 location_id, 
                 avg(air_quality_pm2_5) as avg_pm2_5, 
                 avg(air_quality_pm10) as avg_pm10, 
-                avg(air_quality_index) as avg_index 
             from air_quality
             group by location_id;
             """

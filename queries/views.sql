@@ -10,7 +10,7 @@ group by l.country;
 create view if not exists air_quality_summary as
 select 
     l.location_name  -- city or location name
-    , aq.air_quality_pm2_5, -- PM2.5 pollution level
+    , aq.air_quality_pm2_5 -- PM2.5 pollution level
     , aq.air_quality_pm10  -- PM10 pollution level
     , aq.air_quality_us_epa_index  -- US EPA air quality index
 from air_quality aq
