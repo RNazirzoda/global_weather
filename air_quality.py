@@ -1,35 +1,56 @@
-import streamlit as st
 import pandas as pd
-import duckdb
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-db_file = "my.db"
+import plotly.express as px
+import streamlit as st
+import db  # Импортируем наш модуль с функциями работы с базой
 
 st.title("🌍 Анализ качества воздуха")
+st.write("---")
 
-# Выбор даты пользователем
-selected_date = st.date_input("📅 Выберите дату", value=pd.to_datetime("2025-03-06"))
-selected_date_str = selected_date.strftime('%Y-%m-%d')  # Преобразуем в строку
+# Получаем диапазон доступных дат
+min_date, max_date = db.fetch_date_boundaries()
 
-with duckdb.connect(db_file) as conn:
-    df_air = conn.execute(f"""
-        select l.country, avg(a."air_quality_pm2.5") as avg_pm2_5
-        from air_quality a
-        join locations l on a.location_id = l.location_id
-        where cast(a.last_updated as date) = '{selected_date_str}'
-        group by l.country
-        order by avg_pm2_5 desc
-        limit 10
-    """).fetchdf()
+# **Фильтр по дате в боковой панели**
+with st.sidebar:
+    st.write("---")
+    st.write("📅 Основной фильтр")
+    selected_date = st.date_input(
+        label="Выберите дату",
+        min_value=min_date,
+        max_value=max_date,
+        value=max_date
+    )
 
-if df_air.empty:
-    st.warning("❌ Нет данных для выбранной даты.")
+# Получаем данные о качестве воздуха по выбранной дате
+air_quality_df = db.fetch_air_quality_data(selected_date)
+
+if air_quality_df.empty:
+    st.warning("❌ Данные за выбранную дату отсутствуют.")
 else:
-    fig, ax = plt.subplots(figsize=(10, 5))
-    sns.barplot(x=df_air["country"], y=df_air["avg_pm2_5"], ax=ax, palette="magma")
-    ax.set_title(f"🌍 Загрязнение воздуха (PM2.5) по странам ({selected_date_str})")
-    ax.set_xlabel("Страна")
-    ax.set_ylabel("Средний PM2.5")
-    plt.xticks(rotation=45)
-    st.pyplot(fig)
+    st.write("### 🌍 Загрязнение воздуха (PM2.5) по странам")
+
+    # **Метрики**
+    col1, col2 = st.columns(2)
+    col1.metric("Макс. PM2.5", round(air_quality_df["air_quality_pm2.5"].max(), 2))
+    col2.metric("Мин. PM2.5", round(air_quality_df["air_quality_pm2.5"].min(), 2))
+
+    # **Столбчатая диаграмма: Загрязнение воздуха**
+    air_quality_fig = px.bar(
+        data_frame=air_quality_df.groupby("country")["air_quality_pm2.5"].mean().reset_index(),
+        x="country",
+        y="air_quality_pm2.5",
+        title="🌎 Средний уровень PM2.5 по странам",
+        labels={"air_quality_pm2.5": "PM2.5", "country": "Страна"},
+        color="air_quality_pm2.5",
+        color_continuous_scale="reds"
+    )
+    st.plotly_chart(air_quality_fig)
+
+    # **Гистограмма: Распределение PM2.5**
+    pm2_hist = px.histogram(
+        air_quality_df,
+        x="air_quality_pm2.5",
+        title="📊 Распределение PM2.5",
+        labels={"air_quality_pm2.5": "PM2.5"},
+        nbins=20
+    )
+    st.plotly_chart(pm2_hist)
