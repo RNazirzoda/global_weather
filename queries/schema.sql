@@ -23,6 +23,7 @@ create table if not exists weather (
 create table if not exists air_quality (
     air_quality_id integer not null unique  -- primary key
     , location_id integer not null  -- foreign key reference to locations
+    , last_updated timestamp not null  -- timestamp of last update
     , air_quality_pm2_5 real  -- PM2.5 pollution level
     , air_quality_pm10 real  -- PM10 pollution level
     , air_quality_us_epa_index integer  -- US EPA air quality index
