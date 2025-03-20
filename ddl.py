@@ -36,6 +36,8 @@ def insert_to_db(temp_df, tbl_name):
             print(f"Данные для {tbl_name} отсутствуют.")
             return
 
+        print(f"📌 Вставка {len(temp_df)} строк в таблицу {tbl_name}...")
+        
         with duckdb.connect(DB_FILE) as conn:
             for _, row in temp_df.iterrows():
                 placeholders = ', '.join(['?'] * len(row))
@@ -131,6 +133,8 @@ def create_n_insert():
 
         for sheet, details in tables_dict.items():
             temp_df = read_xl(sheet, details["columns"])
+            print(f"📌 Лист {sheet}: загружено {len(temp_df) if temp_df is not None else 0} строк")
+            
             insert_to_db(temp_df, details["table_name"])
 
         print("Все данные успешно загружены!")
