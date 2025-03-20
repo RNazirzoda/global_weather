@@ -1,24 +1,46 @@
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-import db 
+import db  
 
 st.title("Прогноз погоды")
 st.write("---")
 
-forecast_df = db.fetch_forecast_data()
 
-if forecast_df.empty:
+min_date, max_date = db.fetch_date_boundaries()
+
+
+with st.sidebar:
+    st.write("Основной фильтр")
+    selected_date = st.date_input(
+        label="Выберите дату прогноза",
+        min_value=min_date,
+        max_value=max_date,
+        value=max_date
+    )
+
+
+forecast_df = db.fetch_forecast_data(selected_date)
+
+
+if forecast_df is None or forecast_df.empty:
     st.warning("Данные о прогнозе отсутствуют.")
 else:
-    st.write("### Средняя прогнозируемая температура по странам")
+    st.write("### Прогноз температуры по странам")
+    
+    
+    col1, col2 = st.columns(2)
+    col1.metric("Макс. температура", round(forecast_df["forecast_temperature"].max(), 2))
+    col2.metric("Мин. температура", round(forecast_df["forecast_temperature"].min(), 2))
 
-    forecast_fig = px.line(
+    
+    fig = px.bar(
         forecast_df,
-        x="forecast_date",
+        x="country",
         y="forecast_temperature",
-        color="country",
-        title="Прогноз температуры по странам",
-        labels={"forecast_temperature": "Температура (°C)", "forecast_date": "Дата"},
+        title="Средняя прогнозируемая температура по странам",
+        labels={"forecast_temperature": "Температура (°C)", "country": "Страна"},
+        color="forecast_temperature",
+        color_continuous_scale="thermal"
     )
-    st.plotly_chart(forecast_fig)
+    st.plotly_chart(fig)
