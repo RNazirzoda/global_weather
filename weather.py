@@ -30,8 +30,8 @@ else:
 
     
     col1, col2 = st.columns(2)
-    col1.metric("Макс. температура (°C)", round(weather_df["temperature_celsius"].max(), 2))
-    col2.metric("Мин. температура (°C)", round(weather_df["temperature_celsius"].min(), 2))
+    col1.metric("Макс. температура (°C)", round(float(weather_df["temperature_celsius"].max()), 2))
+    col2.metric("Мин. температура (°C)", round(float(weather_df["temperature_celsius"].min()), 2))
 
     
     avg_temp_fig = px.bar(

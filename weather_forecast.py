@@ -30,8 +30,8 @@ else:
     
     
     col1, col2 = st.columns(2)
-    col1.metric("Макс. температура", round(forecast_df["forecast_temperature"].max(), 2))
-    col2.metric("Мин. температура", round(forecast_df["forecast_temperature"].min(), 2))
+    col1.metric("Макс. прогнозируемая температура (°C)", round(float(forecast_df["forecast_temperature"].max()), 2))
+    col2.metric("Мин. прогнозируемая температура (°C)", round(float(forecast_df["forecast_temperature"].min()), 2))
 
     
     fig = px.bar(

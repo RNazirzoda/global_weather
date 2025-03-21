@@ -30,8 +30,8 @@ else:
 
     
     col1, col2 = st.columns(2)
-    col1.metric("Макс. PM2.5", round(air_quality_df["air_quality_pm2_5"].max(), 2))
-    col2.metric("Мин. PM2.5", round(air_quality_df["air_quality_pm2_5"].min(), 2))
+    col1.metric("Макс. PM2.5", round(float(air_quality_df["air_quality_pm2_5"].max()), 2))
+    col2.metric("Мин. PM2.5", round(float(air_quality_df["air_quality_pm2_5"].min()), 2))
 
     
     air_quality_fig = px.bar(
