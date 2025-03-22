@@ -10,7 +10,7 @@ min_date, max_date = db.fetch_date_boundaries()
 
 # **Фильтр по дате и стране в боковой панели**
 with st.sidebar:
-    st.write("📅 Основной фильтр")
+    st.write("Основной фильтр")
     selected_date = st.date_input(
         label="Выберите дату",
         min_value=min_date,

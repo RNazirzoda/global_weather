@@ -38,7 +38,7 @@ else:
         data_frame=weather_df.groupby("country")["temperature_celsius"].mean().reset_index(),
         x="country",
         y="temperature_celsius",
-        title="🌎 Средняя температура по странам",
+        title="Средняя температура по странам",
         labels={"temperature_celsius": "Температура (°C)", "country": "Страна"},
         color="temperature_celsius",
         color_continuous_scale="blues"

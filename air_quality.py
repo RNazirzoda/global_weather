@@ -24,9 +24,9 @@ with st.sidebar:
 air_quality_df = db.fetch_air_quality_data(selected_date)
 
 if air_quality_df.empty:
-    st.warning("❌ Данные за выбранную дату отсутствуют.")
+    st.warning("Данные за выбранную дату отсутствуют.")
 else:
-    st.write("### 🌍 Загрязнение воздуха (PM2.5) по странам")
+    st.write("###Загрязнение воздуха (PM2.5) по странам")
 
     
     col1, col2 = st.columns(2)
@@ -38,7 +38,7 @@ else:
         data_frame=air_quality_df.groupby("country")["air_quality_pm2_5"].mean().reset_index(),
         x="country",
         y="air_quality_pm2_5",
-        title="🌎 Средний уровень PM2.5 по странам",
+        title="Средний уровень PM2.5 по странам",
         labels={"air_quality_pm2_5": "PM2.5", "country": "Страна"},
         color="air_quality_pm2_5",
         color_continuous_scale="reds"
@@ -49,7 +49,7 @@ else:
     pm2_hist = px.histogram(
         air_quality_df,
         x="air_quality_pm2_5",
-        title="📊 Распределение PM2.5",
+        title="Распределение PM2.5",
         labels={"air_quality_pm2_5": "PM2.5"},
         nbins=20
     )
