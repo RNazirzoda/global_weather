@@ -17,8 +17,8 @@ else:
 
     
     col1, col2 = st.columns(2)
-    col1.metric("Макс. температура", round(historical_df["temperature_celsius"].max(), 2))
-    col2.metric("Мин. температура", round(historical_df["temperature_celsius"].min(), 2))
+    col1.metric("Макс. температура", round(float(historical_df["temperature_celsius"].max()), 2))
+    col2.metric("Мин. температура", round(float(historical_df["temperature_celsius"].min()), 2))
 
     
     fig = px.line(

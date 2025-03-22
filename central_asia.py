@@ -29,7 +29,7 @@ central_asia_air_quality = db.fetch_central_asia_air_quality(selected_date, sele
 if central_asia_weather.empty and central_asia_air_quality.empty:
     st.warning(f"Данные по {selected_country} за {selected_date} отсутствуют.")
 else:
-    st.write(f"###Погодные данные по {selected_country} за {selected_date}")
+    st.write(f"Погодные данные по {selected_country} за {selected_date}")
 
     # **Метрики температуры**
     col1, col2 = st.columns(2)
