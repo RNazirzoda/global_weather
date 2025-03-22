@@ -121,17 +121,6 @@ def create_n_insert():
                     "forecast_condition": "forecast_condition"
                 },
                 "table_name": "weather_forecast"
-            },
-            "historical_data": {
-                "columns": {
-                    "history_id": "history_id",
-                    "location_id": "location_id",
-                    "last_updated": "last_updated",
-                    "temperature_celsius": "temperature_celsius",
-                    "condition_text": "condition_text",
-                    "humidity": "humidity",
-                },
-                "table_name": "historical_data"
             }
         }
 

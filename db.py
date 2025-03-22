@@ -63,66 +63,38 @@ def fetch_forecast_data(selected_date):
         print(f"Ошибка при загрузке прогноза погоды: {e}")
         return None
 
-def fetch_historical_data(selected_date):
-    """Получаем исторические данные о погоде для выбранной даты."""
+def fetch_central_asia_data(report_date):
+    """Получает погодные данные для стран Центральной Азии."""
     try:
-        selected_date = selected_date.strftime("%Y-%m-%d")
-        with duckdb.connect(DB_FILE) as conn:
-            historical_df = conn.execute(f"""
-                select l.country, h.last_updated, h.temperature_celsius, h.humidity
-                from historical_data h
-                join locations l on h.location_id = l.location_id
-                where cast(h.last_updated as date) = '{selected_date}'
-                order by h.last_updated
-            """).fetchdf()
-        return historical_df if not historical_df.empty else None
-    except Exception as e:
-        print(f"Ошибка при загрузке исторических данных: {e}")
-        return None
-
-def fetch_central_asia_data(report_date, country="Все"):
-    """Получает данные о погоде для стран Центральной Азии."""
-    try:
-        central_asian_countries = ["Kazakhstan", "Uzbekistan", "Tajikistan", "Kyrgyzstan", "Turkmenistan"]
-
+        ca_countries = ("Kazakhstan", "Uzbekistan", "Tajikistan", "Kyrghyzstan", "Turkmenistan")
         query = f"""
             select l.country, w.temperature_celsius, w.humidity, w.wind_kph
             from weather w
             join locations l on w.location_id = l.location_id
             where cast(w.last_updated as date) = '{report_date}'
-            and l.country in {tuple(central_asian_countries)}
+              and l.country in {ca_countries}
         """
-        if country != "Все":
-            query += f" and l.country = '{country}'"
-
         with duckdb.connect(DB_FILE) as conn:
-            weather_df = conn.execute(query).fetchdf()
-
-        return weather_df if not weather_df.empty else pd.DataFrame()
+            df = conn.execute(query).fetchdf()
+        return df if not df.empty else pd.DataFrame()
     except Exception as e:
-        print(f"Ошибка при загрузке данных о погоде для Центральной Азии: {e}")
+        print(f"Ошибка при загрузке данных о погоде для ЦА: {e}")
         return pd.DataFrame()
 
-
-def fetch_central_asia_air_quality(report_date, country="Все"):
-    """Получает данные о качестве воздуха для стран Центральной Азии."""
+def fetch_central_asia_air_quality(report_date):
+    """Получает данные о загрязнении воздуха для стран Центральной Азии."""
     try:
-        central_asian_countries = ["Kazakhstan", "Uzbekistan", "Tajikistan", "Kyrgyzstan", "Turkmenistan"]
-
+        ca_countries = ("Kazakhstan", "Uzbekistan", "Tajikistan", "Kyrghyzstan", "Turkmenistan")
         query = f"""
             select l.country, a.air_quality_pm2_5, a.air_quality_pm10
             from air_quality a
             join locations l on a.location_id = l.location_id
             where cast(a.last_updated as date) = '{report_date}'
-            and l.country in {tuple(central_asian_countries)}
+              and l.country in {ca_countries}
         """
-        if country != "Все":
-            query += f" and l.country = '{country}'"
-
         with duckdb.connect(DB_FILE) as conn:
-            air_quality_df = conn.execute(query).fetchdf()
-
-        return air_quality_df if not air_quality_df.empty else pd.DataFrame()
+            df = conn.execute(query).fetchdf()
+        return df if not df.empty else pd.DataFrame()
     except Exception as e:
-        print(f"Ошибка при загрузке качества воздуха для Центральной Азии: {e}")
+        print(f"Ошибка при загрузке качества воздуха для ЦА: {e}")
         return pd.DataFrame()
