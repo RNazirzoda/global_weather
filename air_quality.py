@@ -3,7 +3,7 @@ import plotly.express as px
 import streamlit as st
 import db  
 
-st.title("🌍 Анализ качества воздуха")
+st.title("Анализ качества воздуха")
 st.write("---")
 
 
@@ -12,7 +12,7 @@ min_date, max_date = db.fetch_date_boundaries()
 
 with st.sidebar:
     st.write("---")
-    st.write("📅 Основной фильтр")
+    st.write("Основной фильтр")
     selected_date = st.date_input(
         label="Выберите дату",
         min_value=min_date,
@@ -26,7 +26,7 @@ air_quality_df = db.fetch_air_quality_data(selected_date)
 if air_quality_df.empty:
     st.warning("Данные за выбранную дату отсутствуют.")
 else:
-    st.write("###Загрязнение воздуха (PM2.5) по странам")
+    st.write("### Загрязнение воздуха (PM2.5) по странам")
 
     
     col1, col2 = st.columns(2)

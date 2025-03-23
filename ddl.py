@@ -131,5 +131,4 @@ def create_n_insert():
         print("Все данные успешно загружены!")
         create_views()
 
-# Запуск загрузки данных
 create_n_insert()
