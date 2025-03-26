@@ -14,8 +14,9 @@ page = st.sidebar.selectbox(
     [
         "Главная", 
         "Погода", 
-        "Качество воздуха", 
-        "Прогноз погоды", 
+        "Качество воздуха",
+        "Влажность воздуха",
+        "Скорость ветра",
         "Центральная Азия"
     ]
 )
@@ -45,8 +46,11 @@ elif page == "Погода":
 elif page == "Качество воздуха":
     load_module("air_quality", "air_quality.py")
 
-elif page == "Прогноз погоды":
-    load_module("weather_forecast", "weather_forecast.py")
+elif page == "Влажность воздуха":
+    load_module("humidity", "humidity.py")
+
+elif page == "Скорость ветра":
+    load_module("wind", "wind.py")
 
 elif page == "Центральная Азия":
     load_module("central_asia", "central_asia.py")

@@ -46,23 +46,6 @@ def fetch_air_quality_data(report_date):
         print(f"Ошибка при загрузке данных о качестве воздуха: {e}")
         return None
 
-def fetch_forecast_data(selected_date):
-    """Получаем прогноз погоды для выбранной даты."""
-    try:
-        selected_date = selected_date.strftime("%Y-%m-%d")
-        with duckdb.connect(DB_FILE) as conn:
-            forecast_df = conn.execute(f"""
-                select l.country, f.forecast_date, f.forecast_temperature, f.forecast_condition
-                from weather_forecast f
-                join locations l on f.location_id = l.location_id
-                where cast(f.forecast_date as date) = '{selected_date}'
-                order by f.forecast_date
-            """).fetchdf()
-        return forecast_df if not forecast_df.empty else None
-    except Exception as e:
-        print(f"Ошибка при загрузке прогноза погоды: {e}")
-        return None
-
 def fetch_central_asia_data(report_date):
     """Получает погодные данные для стран Центральной Азии."""
     try:
