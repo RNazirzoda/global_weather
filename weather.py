@@ -3,7 +3,7 @@ import plotly.express as px
 import streamlit as st
 import db
 
-st.title("Анализ погоды")
+st.title("Анализ температуры")
 st.write("---")
 
 
