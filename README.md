@@ -77,5 +77,5 @@
 
 ## Деплой
 
-Готовый дашборд задеплоен и доступен по ссылке:  
-[https://your-deployed-streamlit-url](#) *(указать вашу ссылку после деплоя)*
+Ссылка на задеплоенный дашборд:  
+[https://rnazirzoda-global-weather-main-wgky3e.streamlit.app/]
