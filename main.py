@@ -60,5 +60,5 @@ elif page == "Центральная Азия":
 
 st.markdown("""**Данные предоставлены на основе глобальных погодных записей.**
 Основной датасет был взят с платформы Kaggle:  
-🔗 [Global Weather Repository — Kaggle](https://www.kaggle.com/datasets/nelgiriyewithana/global-weather-repository/data?select=GlobalWeatherRepository.csv)  
+[Global Weather Repository — Kaggle](https://www.kaggle.com/datasets/nelgiriyewithana/global-weather-repository/data?select=GlobalWeatherRepository.csv)  
 Датасет был **адаптирован** и **структурирован** исполнителем в виде набора взаимосвязанных таблиц для использования в базе данных DuckDB, в соответствии с требованиями курсового проекта.""")
